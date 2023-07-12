@@ -8,6 +8,10 @@ object DevmarktBotConfig {
 		get() = envOrNull("DEVMARKT_BOT_TOKEN")
 			?: throw NullPointerException("Bot token not found. DEVMARKT_BOT_TOKEN=<bot_token>")
 
+	val JWT_TOKEN: String
+		get() = envOrNull("DEVMARKT_BOT_JWT_TOKEN")
+			?: throw NullPointerException("Bot token not found. DEVMARKT_BOT_JWT_TOKEN=<jwt_token>")
+
 	val BACKEND_HOST = envOrNull("DEVMARKT_BACKEND_HOST")
 		?: throw NullPointerException("Backend host not found. DEVMARKT_BACKEND_HOST=<backend_host>")
 
