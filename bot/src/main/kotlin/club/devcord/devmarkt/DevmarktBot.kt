@@ -7,22 +7,24 @@ import com.expediagroup.graphql.client.ktor.GraphQLKtorClient
 import com.expediagroup.graphql.client.serialization.GraphQLClientKotlinxSerializer
 import com.kotlindiscord.kord.extensions.ExtensibleBot
 import dev.kord.core.Kord
+import dev.kord.core.entity.effectiveName
 import dev.kord.core.kordLogger
+import dev.kord.core.supplier.EntitySupplyStrategy
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.count
 import java.net.URL
 import kotlin.coroutines.CoroutineContext
 import kotlin.system.exitProcess
 
 object DevmarktBot : CoroutineScope {
 
-	lateinit var kord: Kord
+	val kord: Kord
+		get() = kordexClient.kordRef
+
 	lateinit var kordexClient: ExtensibleBot
 
 	lateinit var graphQlClient: GraphQLKtorClient
@@ -33,7 +35,7 @@ object DevmarktBot : CoroutineScope {
 		}
 	}
 
-	suspend fun startBot() {
+	suspend fun startBot() = coroutineScope {
 		httpClient.checkBackendHealth { isUp, _ ->
 			if (isUp) return@checkBackendHealth
 
@@ -41,7 +43,7 @@ object DevmarktBot : CoroutineScope {
 				"Backend is not reachable or sends invalid data. Please check the backend url (DEVMARKT_BACKEND_URL=<backend_url>) or if the backend is currently running and is well configured."
 			}
 
-			runBlocking {
+			launch {
 				if (this@DevmarktBot::graphQlClient.isInitialized) graphQlClient.close()
 				if (this@DevmarktBot::graphQlClient.isInitialized) httpClient.close()
 				if (this@DevmarktBot::graphQlClient.isInitialized) kord.shutdown()
@@ -65,9 +67,20 @@ object DevmarktBot : CoroutineScope {
 				add { HealthCheckCommand("health-check") }
 			}
 		}
-		kord = kordexClient.kordRef
-		kordLogger.info("Starting devmarkt bot. [ID: {}, Username: {}]", kord.selfId, kord.getSelf().globalName)
+		kordLogger.info(
+			"Starting devmarkt bot. [ID: {}, Username: {}]",
+			kord.selfId,
+			kord.getSelf(EntitySupplyStrategy.cacheWithCachingRestFallback).effectiveName
+		)
+
 		kordexClient.start()
+
+		kordLogger.info {
+			launch {
+				"Currently on ${kord.guilds.count()} guilds."
+			}
+		}
+
 	}
 
 	private val job: Job = Job()
