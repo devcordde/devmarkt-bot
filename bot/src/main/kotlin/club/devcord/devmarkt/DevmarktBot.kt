@@ -48,7 +48,7 @@ object DevmarktBot : CoroutineScope {
 			}
 
 			exitProcess(1)
-		}
+		}.await()
 
 		graphQlClient = GraphQLKtorClient(
 			URL("http://${DevmarktBotConfig.BACKEND_URL}/graphql"),

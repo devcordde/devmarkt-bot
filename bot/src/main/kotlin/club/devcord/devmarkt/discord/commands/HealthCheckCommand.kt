@@ -13,7 +13,7 @@ import dev.kord.rest.builder.message.create.embed
 class HealthCheckCommand(override val name: String) : Extension() {
 
 	override suspend fun setup() {
-		ephemeralSlashCommand() {
+		ephemeralSlashCommand {
 			name = "health"
 			description = "Checks if the bot can build a connection to the backend. This command has a cool down of 1 minute."
 
