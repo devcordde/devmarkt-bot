@@ -53,7 +53,7 @@ object DevmarktBot : CoroutineScope {
 		}.await()
 
 		graphQlClient = GraphQLKtorClient(
-			URL("http://${BotConfig.BACKEND_URL}/graphql"),
+			URL("${BotConfig.BACKEND_URL}/graphql"),
 			httpClient = httpClient,
 			serializer = GraphQLClientKotlinxSerializer()
 		)
