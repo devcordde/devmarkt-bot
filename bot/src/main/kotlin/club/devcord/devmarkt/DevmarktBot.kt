@@ -50,7 +50,7 @@ object DevmarktBot : CoroutineScope {
 			}
 
 			exitProcess(1)
-		}.await()
+		}
 
 		graphQlClient = GraphQLKtorClient(
 			URL("${BotConfig.BACKEND_URL}/graphql"),

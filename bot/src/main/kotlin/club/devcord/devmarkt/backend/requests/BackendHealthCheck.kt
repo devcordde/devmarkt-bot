@@ -6,7 +6,6 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.serialization.Serializable
@@ -22,7 +21,7 @@ data class Health(
 	}
 }
 
-suspend fun HttpClient.checkBackendHealth(handle: (Boolean, Long?) -> Unit): Deferred<Unit> {
+suspend fun HttpClient.checkBackendHealth(handle: (Boolean, Long?) -> Unit): Unit {
 	return coroutineScope {
 		async {
 			val response = try {
@@ -44,6 +43,6 @@ suspend fun HttpClient.checkBackendHealth(handle: (Boolean, Long?) -> Unit): Def
 			val millis = if (isUp) response.responseMillis else null
 
 			handle(isUp, millis)
-		}
+		}.await()
 	}
 }

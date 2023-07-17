@@ -9,8 +9,8 @@ repositories {
 }
 
 dependencies {
-	implementation(libs.bundles.ktor)
-	implementation(libs.graphql)
 	implementation(libs.bundles.logging)
+	implementation(libs.bundles.ktor)
 	implementation(libs.bundles.kord)
+	implementation(libs.graphql)
 }

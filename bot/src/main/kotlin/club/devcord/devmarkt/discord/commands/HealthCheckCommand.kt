@@ -45,7 +45,7 @@ class HealthCheckCommand(override val name: String) : Extension() {
 								else "The backend is not reachable."
 							}
 						}
-					}.await()
+					}
 				}
 			}
 		}
