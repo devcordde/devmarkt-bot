@@ -45,17 +45,21 @@ dependencyResolutionManagement {
 				)
 			)
 
-			bundle("kord", listOf(
-				"kord-core",
-				"kord-core-voice",
-				"kord-common",
-				"kordex"
-			))
+			bundle(
+				"kord", listOf(
+					"kord-core",
+					"kord-core-voice",
+					"kord-common",
+					"kordex"
+				)
+			)
 
-			bundle("logging", listOf(
-				"kotlin-logging",
-				"logback-classic"
-			))
+			bundle(
+				"logging", listOf(
+					"kotlin-logging",
+					"logback-classic"
+				)
+			)
 		}
 	}
 }
