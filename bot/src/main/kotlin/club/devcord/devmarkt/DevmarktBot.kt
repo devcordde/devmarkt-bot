@@ -1,7 +1,7 @@
 package club.devcord.devmarkt
 
 import club.devcord.devmarkt.backend.requests.checkBackendHealth
-import club.devcord.devmarkt.config.DevmarktBotConfig
+import club.devcord.devmarkt.config.BotConfig
 import club.devcord.devmarkt.discord.commands.HealthCheckCommand
 import com.expediagroup.graphql.client.ktor.GraphQLKtorClient
 import com.expediagroup.graphql.client.serialization.GraphQLClientKotlinxSerializer
@@ -53,12 +53,12 @@ object DevmarktBot : CoroutineScope {
 		}.await()
 
 		graphQlClient = GraphQLKtorClient(
-			URL("http://${DevmarktBotConfig.BACKEND_URL}/graphql"),
+			URL("http://${BotConfig.BACKEND_URL}/graphql"),
 			httpClient = httpClient,
 			serializer = GraphQLClientKotlinxSerializer()
 		)
 
-		kordexClient = ExtensibleBot(DevmarktBotConfig.BOT_TOKEN) {
+		kordexClient = ExtensibleBot(BotConfig.BOT_TOKEN) {
 			this.applicationCommands {
 				enabled = true
 			}

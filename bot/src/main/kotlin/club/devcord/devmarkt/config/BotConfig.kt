@@ -2,7 +2,7 @@ package club.devcord.devmarkt.config
 
 import com.kotlindiscord.kord.extensions.utils.envOrNull
 
-object DevmarktBotConfig {
+object BotConfig {
 
 	val BOT_TOKEN: String
 		get() = envOrNull("DEVMARKT_BOT_TOKEN")

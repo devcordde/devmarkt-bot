@@ -1,6 +1,6 @@
 package club.devcord.devmarkt.backend.requests
 
-import club.devcord.devmarkt.config.DevmarktBotConfig
+import club.devcord.devmarkt.config.BotConfig
 import club.devcord.devmarkt.util.responseMillis
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -29,8 +29,8 @@ suspend fun HttpClient.checkBackendHealth(handle: (Boolean, Long?) -> Unit): Def
 				(this@checkBackendHealth.get {
 					url {
 						protocol = URLProtocol.HTTP
-						host = DevmarktBotConfig.BACKEND_HOST
-						port = DevmarktBotConfig.BACKEND_PORT.toInt()
+						host = BotConfig.BACKEND_HOST
+						port = BotConfig.BACKEND_PORT.toInt()
 						path("/health")
 					}
 				})
