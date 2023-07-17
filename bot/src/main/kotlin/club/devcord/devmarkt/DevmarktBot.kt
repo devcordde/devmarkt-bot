@@ -67,6 +67,7 @@ object DevmarktBot : CoroutineScope {
 				add { HealthCheckCommand("health-check") }
 			}
 		}
+
 		kordLogger.info(
 			"Starting devmarkt bot. [ID: {}, Username: {}]",
 			kord.selfId,
@@ -84,6 +85,9 @@ object DevmarktBot : CoroutineScope {
 	}
 
 	private val job: Job = Job()
+
+	val botScope: CoroutineScope
+		get() = CoroutineScope(coroutineContext)
 
 	override val coroutineContext: CoroutineContext
 		get() = Dispatchers.Default + job
