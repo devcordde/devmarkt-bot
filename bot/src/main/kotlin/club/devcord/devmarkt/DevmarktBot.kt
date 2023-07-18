@@ -69,19 +69,13 @@ object DevmarktBot : CoroutineScope {
 		}
 
 		kordLogger.info(
-			"Starting devmarkt bot. [ID: {}, Username: {}]",
+			"Starting devmarkt bot. [ID: {}, Username: {}, Guilds: {}]",
 			kord.selfId,
-			kord.getSelf(EntitySupplyStrategy.cacheWithCachingRestFallback).effectiveName
+			kord.getSelf(EntitySupplyStrategy.cacheWithCachingRestFallback).effectiveName,
+			kord.guilds.count()
 		)
 
 		kordexClient.start()
-
-		kordLogger.info {
-			launch {
-				"Currently on ${kord.guilds.count()} guilds."
-			}
-		}
-
 	}
 
 	private val job: Job = Job()
