@@ -76,15 +76,32 @@ object DevmarktBot : CoroutineScope {
 		)
 
 		kordexClient.start()
+
 	}
 
 	private val job: Job = Job()
 
-	val botScope: CoroutineScope
-		get() = CoroutineScope(coroutineContext)
-
 	override val coroutineContext: CoroutineContext
 		get() = Dispatchers.Default + job
+
+
+	private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+		kordLogger.error(throwable) {
+			throwable.message
+		}
+	}
+
+	val botScope: CoroutineScope
+		get() = CoroutineScope(coroutineContext + exceptionHandler)
+
+
+	init {
+		Thread.setDefaultUncaughtExceptionHandler { _, throwable ->
+			kordLogger.error(throwable) {
+				throwable.message
+			}
+		}
+	}
 }
 
 suspend fun main() {
