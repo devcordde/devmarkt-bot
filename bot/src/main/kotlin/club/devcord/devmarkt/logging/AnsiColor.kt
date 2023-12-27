@@ -1,6 +1,9 @@
 package club.devcord.devmarkt.logging
 
-
+/**
+ * @author Paul Kindler
+ * @since 19/12/2023
+ */
 enum class AnsiColor(val ansi: String) {
 	RESET("\u001B[0m"),
 	BLACK("\u001B[30m"),
@@ -10,8 +13,7 @@ enum class AnsiColor(val ansi: String) {
 	BLUE("\u001B[34m"),
 	PURPLE("\u001B[35m"),
 	CYAN("\u001B[36m"),
-	WHITE("\u001B[37m"),
-	DARK_PURPLE("\u001B[38m");
+	WHITE("\u001B[37m");
 
 	/**
 	 * Formats a string with the given ansi escape sequence
@@ -19,9 +21,7 @@ enum class AnsiColor(val ansi: String) {
 	 * @param stringToColorize the String to be colorized
 	 * @return the colorized String
 	 */
-	fun colorize(stringToColorize: String): String {
-		return ansi + stringToColorize + ansi
-	}
+	fun colorize(stringToColorize: String) = ansi + stringToColorize + ansi
 
 	companion object {
 		/**
@@ -30,17 +30,8 @@ enum class AnsiColor(val ansi: String) {
 		 * @param coloredString the string to strip
 		 * @return the string without ansi escape codes
 		 */
-		fun stripColors(coloredString: String): String {
-			return coloredString.replace("\u001B\\[(0|3[0-7])m".toRegex(), "")
-		}
+		fun stripColors(coloredString: String) = coloredString.replace("\u001B\\[(0|3[0-7])m".toRegex(), "")
 
-		fun fromName(name: String?): AnsiColor? {
-			for (color in entries) {
-				if (color.name.equals(name, ignoreCase = true)) {
-					return color
-				}
-			}
-			return null
-		}
+		fun fromName(name: String) = entries.find { it.name.lowercase() == name.lowercase() }
 	}
 }

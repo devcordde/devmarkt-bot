@@ -18,5 +18,8 @@ object BotConfig {
 	val BACKEND_PORT = envOrNull("DEVMARKT_BACKEND_PORT")
 		?: throw NullPointerException("Backend port not found. DEVMARKT_BACKEND_PORT=<backend_port>")
 
+	val DEVMARKT_CHANNEL = envOrNull("DEVMARKT_CHANNEL_ID")
+		?: throw NullPointerException("Devmarkt channel id not found. DEVMARKT_CHANNEL_ID=<channel_id>")
+
 	val BACKEND_URL = "http://$BACKEND_HOST:$BACKEND_PORT"
 }

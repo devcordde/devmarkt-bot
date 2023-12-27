@@ -11,10 +11,9 @@ val HttpResponse.responseMillis: Long
 
 suspend fun GuildBehavior.guildLogoUrl() = fetchGuildOrNull()?.icon?.cdnUrl?.toUrl()
 
-fun EmbedBuilder.Thumbnail.guildIcon(guildBehavior: GuildBehavior) {
-	DevmarktBot.botScope.launch {
-		guildBehavior.guildLogoUrl()?.let {
-			url = it
-		}
+fun EmbedBuilder.Thumbnail.guildIcon(guildBehavior: GuildBehavior) = DevmarktBot.botScope.launch {
+	guildBehavior.guildLogoUrl()?.let {
+		url = it
 	}
 }
+

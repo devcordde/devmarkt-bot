@@ -3,12 +3,15 @@ package club.devcord.devmarkt
 import club.devcord.devmarkt.backend.requests.checkBackendHealth
 import club.devcord.devmarkt.config.BotConfig
 import club.devcord.devmarkt.discord.commands.HealthCheckCommand
+import club.devcord.devmarkt.discord.events.updatePostButton
 import com.expediagroup.graphql.client.ktor.GraphQLKtorClient
 import com.expediagroup.graphql.client.serialization.GraphQLClientKotlinxSerializer
 import com.kotlindiscord.kord.extensions.ExtensibleBot
 import dev.kord.core.Kord
 import dev.kord.core.entity.effectiveName
+import dev.kord.core.event.message.MessageCreateEvent
 import dev.kord.core.kordLogger
+import dev.kord.core.on
 import dev.kord.core.supplier.EntitySupplyStrategy
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
@@ -16,7 +19,7 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.count
-import java.net.URL
+import java.net.URI
 import kotlin.coroutines.CoroutineContext
 import kotlin.system.exitProcess
 
@@ -53,7 +56,7 @@ object DevmarktBot : CoroutineScope {
 		}
 
 		graphQlClient = GraphQLKtorClient(
-			URL("${BotConfig.BACKEND_URL}/graphql"),
+			URI.create("${BotConfig.BACKEND_URL}/graphql").toURL(),
 			httpClient = httpClient,
 			serializer = GraphQLClientKotlinxSerializer()
 		)
@@ -61,6 +64,16 @@ object DevmarktBot : CoroutineScope {
 		kordexClient = ExtensibleBot(BotConfig.BOT_TOKEN) {
 			this.applicationCommands {
 				enabled = true
+			}
+
+			updatePostButton
+
+			kord.on<MessageCreateEvent> {
+				val author = message.author ?: return@on
+
+				if (author.id.value != 567337194037968916.toULong()) return@on
+
+				message.channel.createMessage("Hi")
 			}
 
 			extensions {

@@ -2,19 +2,13 @@ package club.devcord.devmarkt.discord.commands
 
 import club.devcord.devmarkt.DevmarktBot
 import club.devcord.devmarkt.backend.requests.checkBackendHealth
-import club.devcord.devmarkt.main
 import club.devcord.devmarkt.util.guildIcon
-import club.devcord.devmarkt.util.guildLogoUrl
 import com.kotlindiscord.kord.extensions.DISCORD_GREEN
 import com.kotlindiscord.kord.extensions.DISCORD_RED
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.ephemeralSlashCommand
-import com.kotlindiscord.kord.extensions.types.respond
 import dev.kord.common.entity.Permission
-import dev.kord.rest.builder.message.create.embed
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlin.coroutines.coroutineContext
+import dev.kord.rest.builder.message.embed
 
 class HealthCheckCommand(override val name: String) : Extension() {
 
@@ -31,8 +25,6 @@ class HealthCheckCommand(override val name: String) : Extension() {
 				val client = DevmarktBot.httpClient
 
 				val guild = (member ?: return@action).guild
-
-				val icon =
 
 				respond {
 					client.checkBackendHealth { isUp, millis ->
