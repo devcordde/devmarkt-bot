@@ -1,0 +1,23 @@
+mutation createTemplate ($questions: [QuestionInput!]!, $name: TemplateName!) {
+    createTemplate(questions: $questions, name: $name) {
+        __typename
+        ...on Template {
+            questions {
+                number
+                question
+                minAnswerLength
+                multiline
+            }
+        }
+        ... on Failure {
+            errors {
+                code
+                data {
+                    ... on NumberTemplateErrorData {
+                        number
+                    }
+                }
+            }
+        }
+    }
+}

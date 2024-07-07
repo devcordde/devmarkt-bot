@@ -1,0 +1,24 @@
+mutation updateTemplate ($name: TemplateName!, $updated: TemplateInput!){
+    updateTemplate(name: $name, updated: $updated) {
+        __typename
+        ... on Template {
+            name
+            questions {
+                number
+                question
+                minAnswerLength
+                multiline
+            }
+        }
+        ... on Failure {
+            errors {
+                code
+                data {
+                    ... on NumberTemplateErrorData {
+                        number
+                    }
+                }
+            }
+        }
+    }
+}

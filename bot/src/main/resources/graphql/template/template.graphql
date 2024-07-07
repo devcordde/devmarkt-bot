@@ -1,0 +1,24 @@
+query getTemplate ($name: TemplateName!){
+    template(name: $name) {
+        __typename
+        ... on Failure {
+            errors {
+                code
+                data {
+                    ... on NumberTemplateErrorData {
+                        number
+                    }
+                }
+            }
+        }
+        ... on Template {
+            name
+            questions {
+                multiline
+                minAnswerLength
+                number
+                question
+            }
+        }
+    }
+}

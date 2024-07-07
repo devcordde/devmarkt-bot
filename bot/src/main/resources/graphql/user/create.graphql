@@ -1,0 +1,28 @@
+mutation createUser ($id: UserIdInput!, $role: Role!) {
+    createUser(userId: $id, role: $role) {
+        ... on User {
+            role
+            id {
+                type
+                number
+            }
+            applications {
+                answers {
+                    answer
+                    number
+                    question {
+                        question
+                        number
+                        minAnswerLength
+                        multiline
+                    }
+                }
+            }
+        }
+        ... on Failure {
+            errors {
+                code
+            }
+        }
+    }
+}

@@ -1,0 +1,10 @@
+query getTemplatesWithQuestion {
+    templates {
+        questions {
+            number
+            question
+            minAnswerLength
+            multiline
+        }
+    }
+}
