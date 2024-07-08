@@ -1,15 +1,8 @@
 <configuration>
-
-    <conversionRule conversionWord="color"
-                    converterClass="club.devcord.devmarkt.logging.ColorConverter"/>
-    <conversionRule conversionWord="ts"
-                    converterClass="club.devcord.devmarkt.logging.ThrowableSpacer"/>
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %color(%5p) %color(${PID:- }){purple} --- [%15.15t]
-                %color(%-40.40logger{39}){cyan} : %m%n%ts
-            </pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
             <charset>utf-8</charset>
         </encoder>
     </appender>
