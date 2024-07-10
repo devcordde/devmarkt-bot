@@ -13,7 +13,6 @@ repositories {
 }
 
 dependencies {
-	implementation(libs.dotenv)
 	implementation(libs.logback)
 	implementation(libs.jackson)
 	implementation(libs.bundles.discord)
