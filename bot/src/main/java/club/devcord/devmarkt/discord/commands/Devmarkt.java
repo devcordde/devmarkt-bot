@@ -16,8 +16,8 @@ public class Devmarkt extends SlashCommand {
         .guildOnly()
         .subCommand(SubCommand.of(
             "first",
-            "Creates first devmarkt post.",
-            new First()
-        ).argument(Argument.channel("devmarkt-channel", "Channel where requests").asRequired())));
+            "Creates first devmarkt post.")
+                .handler(new First())
+                .argument(Argument.channel("devmarkt-channel", "Channel where requests").asRequired())));
   }
 }

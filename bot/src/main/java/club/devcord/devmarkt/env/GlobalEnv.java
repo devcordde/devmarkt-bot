@@ -1,16 +1,20 @@
 package club.devcord.devmarkt.env;
 
 import club.devcord.devmarkt.DevmarktBot;
+import org.slf4j.Logger;
 
 import java.util.function.Function;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class GlobalEnv {
+  private static final Logger log = getLogger(GlobalEnv.class);
 
   public static String envOrThrow(String key) {
     var env = System.getenv(key);
 
     if (env == null) {
-      DevmarktBot.getLogger().error("Environment {} not set.", key);
+      log.error("Environment {} not set.", key);
       System.exit(1);
     }
 
