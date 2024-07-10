@@ -8,14 +8,15 @@ import de.chojo.jdautil.interactions.dispatching.InteractionHub;
 import net.dv8tion.jda.api.hooks.AnnotatedEventManager;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
-import java.util.logging.Logger;
 
 public class DevmarktBot {
 
-  private static final Logger logger = Logger.getLogger("club.devcord.devmarkt.DevmarktBot");
+  private static final Logger logger = LoggerFactory.getLogger("club.devcord.devmarkt.DevmarktBot");
 
   public static void main(String[] args) throws URISyntaxException {
     var backendUrl = GlobalEnv.envOrThrow("BACKEND_URL");
@@ -23,7 +24,7 @@ public class DevmarktBot {
     var httpClient = HttpClient.newHttpClient();
 
     if (!HealthCheck.isUp(httpClient, backendUrl).join()) {
-      logger.severe("Backend is not reachable.");
+      logger.error("Backend is not reachable.");
       System.exit(1);
     }
 
@@ -39,7 +40,7 @@ public class DevmarktBot {
             new CreateCreationMessage())
         .build();
 
-    var devMode = Boolean.parseBoolean(System.getenv("DEVMARKT_DEV"));
+    var devMode = GlobalEnv.parseEnvOrDefault("DEVMARKT_DEV", Boolean::parseBoolean, false);
 
     InteractionHub.builder(shardManager)
         .testMode(devMode)
