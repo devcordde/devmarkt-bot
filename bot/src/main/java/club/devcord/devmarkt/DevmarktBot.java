@@ -1,11 +1,18 @@
 package club.devcord.devmarkt;
 
 import club.devcord.devmarkt.discord.commands.Devmarkt;
+import club.devcord.devmarkt.discord.events.CreateCreationMessage;
 import club.devcord.devmarkt.env.GlobalEnv;
 import club.devcord.devmarkt.requests.health.HealthCheck;
 import de.chojo.jdautil.interactions.dispatching.InteractionHub;
+import de.chojo.jdautil.localization.ILocalizer;
+import net.dv8tion.jda.api.events.GenericEvent;
+import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
+import net.dv8tion.jda.api.hooks.AnnotatedEventManager;
+import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -31,13 +38,20 @@ public class DevmarktBot {
         .createDefault(botToken)
         .enableIntents(
             GatewayIntent.MESSAGE_CONTENT, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MESSAGES
-        ).build();
+        )
+        .setEventManagerProvider(value -> new AnnotatedEventManager())
+        .addEventListeners(
+            new CreateCreationMessage())
+        .build();
+
+    var devMode = Boolean.parseBoolean(System.getenv("DEVMARKT_DEV"));
 
     InteractionHub.builder(shardManager)
-        .testMode(Boolean.parseBoolean(GlobalEnv.nullable("DEVMARKT_DEV")))
-        .cleanGuildCommands(Boolean.parseBoolean(GlobalEnv.nullable("DEVMARKT_DEV")))
+        .testMode(devMode)
+        .cleanGuildCommands(!devMode)
         .withCommands(new Devmarkt())
         .build();
+
   }
 
   public static Logger getLogger() {

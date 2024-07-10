@@ -14,9 +14,9 @@ repositories {
 
 dependencies {
 	implementation(libs.dotenv)
+	implementation(libs.logback)
 	implementation(libs.jackson)
 	implementation(libs.bundles.discord)
-	implementation(kotlin("stdlib-jdk8"))
 }
 
 java {
