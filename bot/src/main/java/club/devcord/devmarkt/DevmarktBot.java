@@ -34,7 +34,6 @@ public class DevmarktBot {
         .enableIntents(
             GatewayIntent.MESSAGE_CONTENT, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MESSAGES
         )
-        .setEventManagerProvider(value -> new AnnotatedEventManager())
         .addEventListeners(
             new CreateCreationMessage())
         .build();

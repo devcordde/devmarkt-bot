@@ -22,6 +22,6 @@ public class GlobalEnv {
   }
 
   public static <T> T envOrDefault(String key, Function<T, String> parse) {
-
+    return null; // TODO: Implement
   }
 }
