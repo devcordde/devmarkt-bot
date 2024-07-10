@@ -23,6 +23,8 @@ dependencyResolutionManagement {
 			library("dotenv", "io.github.cdimascio", "dotenv-java").version("3.0.0")
 
 			library("jackson", "com.fasterxml.jackson.core", "jackson-databind").version("2.17.2")
+
+			library("logback", "ch.qos.logback", "logback-classic").version("1.5.6")
 		}
 	}
 }
