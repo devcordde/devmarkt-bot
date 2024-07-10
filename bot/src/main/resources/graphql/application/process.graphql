@@ -1,3 +1,3 @@
-mutation updateApplicationStatus ($id: ApplicationId!, $status: ApplicationStatus!) {
+mutation ($id: ApplicationId!, $status: ApplicationStatus!) {
     processApplication(id: $id, status: $status)
 }

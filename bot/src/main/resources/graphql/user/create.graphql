@@ -1,4 +1,4 @@
-mutation createUser ($id: UserIdInput!, $role: Role!) {
+mutation ($id: UserIdInput!, $role: Role!) {
     createUser(userId: $id, role: $role) {
         ... on User {
             role

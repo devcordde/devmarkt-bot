@@ -38,7 +38,7 @@ public record Query(
     var queryBody = objectMapper.writeValueAsString(this);
 
     var request = HttpRequest.newBuilder()
-        .uri(new URI(GlobalEnv.env("BACKEND_URL") + "/graphql"))
+        .uri(new URI(GlobalEnv.envOrThrow("BACKEND_URL") + "/graphql"))
         .POST(HttpRequest.BodyPublishers.ofString(queryBody))
         .build();
 

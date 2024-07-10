@@ -1,4 +1,4 @@
-query getTemplates {
+query {
     templates {
         name
         questions {

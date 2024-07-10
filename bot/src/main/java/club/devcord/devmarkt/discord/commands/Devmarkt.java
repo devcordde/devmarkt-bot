@@ -5,7 +5,6 @@ import de.chojo.jdautil.interactions.slash.Argument;
 import de.chojo.jdautil.interactions.slash.Slash;
 import de.chojo.jdautil.interactions.slash.SubCommand;
 import de.chojo.jdautil.interactions.slash.provider.SlashCommand;
-import de.chojo.jdautil.interactions.slash.structure.builder.argument.ArgumentBuilder;
 import net.dv8tion.jda.api.Permission;
 
 public class Devmarkt extends SlashCommand {

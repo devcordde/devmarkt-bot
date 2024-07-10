@@ -1,4 +1,4 @@
-mutation createTemplate ($questions: [QuestionInput!]!, $name: TemplateName!) {
+mutation($questions: [QuestionInput!]!, $name: TemplateName!) {
     createTemplate(questions: $questions, name: $name) {
         __typename
         ...on Template {

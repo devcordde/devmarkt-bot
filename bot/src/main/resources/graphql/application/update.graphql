@@ -1,4 +1,4 @@
-mutation updateApplicationAnswers ($id: ApplicationId!, $answers: [AnswerInput!]!) {
+mutation ($id: ApplicationId!, $answers: [AnswerInput!]!) {
     updateApplication(id: $id, updatedAnswers: $answers) {
         __typename
         ... on Application {

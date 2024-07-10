@@ -1,4 +1,4 @@
-mutation createApplication ($tName: TemplateName!, $answers: [AnswerInput!]!) {
+mutation ($tName: TemplateName!, $answers: [AnswerInput!]!) {
     createApplication(answers: $answers, templateName: $tName) {
         __typename
         ... on Application {

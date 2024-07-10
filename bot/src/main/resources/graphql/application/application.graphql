@@ -1,4 +1,4 @@
-query getApplication ($id: ApplicationId!) {
+query($id: ApplicationId!) {
     application(id: $id) {
         __typename
         ... on Application {

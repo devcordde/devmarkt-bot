@@ -1,4 +1,4 @@
-query getUser ($id: UserIdInput!) {
+query ($id: UserIdInput!) {
     user(id: $id) {
         ... on User {
             currentApplication {

@@ -1,4 +1,4 @@
-query getTemplate ($name: TemplateName!){
+query($name: TemplateName!){
     template(name: $name) {
         __typename
         ... on Failure {

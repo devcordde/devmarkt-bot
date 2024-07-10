@@ -2,9 +2,11 @@ package club.devcord.devmarkt.env;
 
 import club.devcord.devmarkt.DevmarktBot;
 
+import java.util.function.Function;
+
 public class GlobalEnv {
 
-  public static String env(String key) {
+  public static String envOrThrow(String key) {
     var env = System.getenv(key);
 
     if (env == null) {
@@ -15,7 +17,11 @@ public class GlobalEnv {
     return env;
   }
 
-  public static String nullable(String key) {
+  public static String envOrNull(String key) {
     return System.getenv(key);
+  }
+
+  public static <T> T envOrDefault(String key, Function<T, String> parse) {
+
   }
 }

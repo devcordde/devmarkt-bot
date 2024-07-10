@@ -1,4 +1,4 @@
-query getTemplatesWithQuestion {
+query {
     templates {
         questions {
             number

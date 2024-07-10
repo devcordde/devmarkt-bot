@@ -1,4 +1,4 @@
-mutation updateTemplate ($name: TemplateName!, $updated: TemplateInput!){
+mutation ($name: TemplateName!, $updated: TemplateInput!){
     updateTemplate(name: $name, updated: $updated) {
         __typename
         ... on Template {
