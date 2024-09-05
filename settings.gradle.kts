@@ -11,8 +11,8 @@ dependencyResolutionManagement {
 
 	versionCatalogs {
 		create("libs") {
-			library("jda", "net.dv8tion", "JDA").version("5.0.0-beta.24")
-			library("cjda", "de.chojo", "cjda-util").version("2.9.7+jda-5.0.0")
+			library("jda", "net.dv8tion", "JDA").version("5.1.0")
+			library("cjda", "de.chojo", "cjda-util").version("2.10.1+jda-5.1.0")
 
 			bundle(
 				"discord", listOf(
