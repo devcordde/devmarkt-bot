@@ -12,6 +12,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -33,11 +34,15 @@ public record Query(
     return new Query(graphqlQuery, variables);
   }
 
+  public static Query getQuery(String key) throws URISyntaxException, IOException {
+    return getQuery(key, Collections.emptyMap());
+  }
+
   public CompletableFuture<QueryResponse> executeQuery(HttpClient client, ObjectMapper mapper) throws JsonProcessingException, URISyntaxException {
-    var objectMapper = new ObjectMapper();
-    var queryBody = objectMapper.writeValueAsString(this);
+    var queryBody = mapper.writeValueAsString(this);
 
     var request = HttpRequest.newBuilder()
+        .header("Authorization", "Self %s".formatted(GlobalEnv.envOrThrow("DEVMARKT_BOT_JWT_TOKEN")))
         .uri(new URI(GlobalEnv.envOrThrow("BACKEND_URL") + "/graphql"))
         .POST(HttpRequest.BodyPublishers.ofString(queryBody))
         .build();
@@ -46,11 +51,15 @@ public record Query(
         .thenApply(HttpResponse::body)
         .thenApply(body -> {
           try {
-            return objectMapper.readValue(body, QueryResponse.class);
+            return mapper.readValue(body, QueryResponse.class);
           } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
           }
         });
+  }
+
+  public CompletableFuture<QueryResponse> executeQuery(HttpClient client) throws URISyntaxException, JsonProcessingException {
+    return executeQuery(client, new ObjectMapper());
   }
 
   public <T> CompletableFuture<T> executeQueryMapped(HttpClient client, ObjectMapper mapper, Class<T> type) {
@@ -60,4 +69,9 @@ public record Query(
       throw new RuntimeException(e);
     }
   }
+
+  public <T> CompletableFuture<T> executeQueryMapped(HttpClient client, Class<T> type) {
+    return executeQueryMapped(client, new ObjectMapper(), type);
+  }
+
 }

@@ -41,8 +41,7 @@ public record QueryResponse(
     var userResponse = new QueryResponse("user record in json", "kp was", null);
 
     var client = HttpClient.newHttpClient();
-    var mapper = new ObjectMapper();
 
-    var user = Query.getQuery("user", Collections.emptyMap()).executeQueryMapped(client, new ObjectMapper(), User.class);
+    var user = Query.getQuery("user").executeQueryMapped(client, User.class);
   }
 }
