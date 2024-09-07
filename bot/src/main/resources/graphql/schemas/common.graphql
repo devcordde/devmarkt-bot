@@ -1,0 +1,72 @@
+type Query {
+    templates: [Template!] @Auth(role: "user")
+
+    template(
+        name: TemplateName!
+    ): TemplateResponse @Auth(role: "user")
+
+    roles: [String!] @Auth(role: "admin")
+
+    user(
+        id: UserIdInput!
+    ): UserResponse @Auth(role: "admin")
+
+    application(
+        id: ApplicationId!
+    ): ApplicationResponse @Auth(role: "user") @AuthOwnApplication(idField: "id")
+}
+
+type Mutation {
+    createTemplate(
+        name: TemplateName!
+        questions: [QuestionInput!]! @ContainerSize(min: 1, max: 25)
+    ): TemplateResponse @Auth(role: "admin")
+
+    deleteTemplate(
+        name: TemplateName!
+    ): Boolean @Auth(role: "admin")
+
+    updateTemplate(
+        name: TemplateName!
+        updated: TemplateInput!
+    ): TemplateResponse @Auth(role: "admin")
+
+    createUser(
+        userId: UserIdInput!
+        role: Role!
+    ): UserResponse @Auth(role: "admin")
+
+    deleteUser(
+        userId: UserIdInput!
+    ): Boolean @Auth(role: "admin")
+
+    updateUserRole(
+        userId: UserIdInput!
+        role: Role!
+    ): UserResponse @Auth(role: "admin")
+
+    createApplication(
+        templateName: TemplateName!
+        answers: [AnswerInput!]!
+    ): ApplicationResponse @Auth(role: "user")
+
+    deleteApplication(
+        id: ApplicationId!
+    ): Boolean @Auth(role: "user") @AuthOwnApplication(idField: "id")
+
+    updateApplication(
+        id: ApplicationId!
+        updatedAnswers: [AnswerInput!]!
+    ): ApplicationResponse @Auth(role: "user") @AuthOwnApplication(idField: "id")
+
+    processApplication(
+        id: ApplicationId!
+        status: ApplicationStatus!
+    ): Boolean @Auth(role: "admin")
+}
+
+type Subscription {
+    applicationCreated: Application! @Auth(role: "admin")
+    applicationDeleted: ApplicationId! @Auth(role: "user")
+    applicationProcessed: ApplicationProcessEvent! @Auth(role: "user")
+}

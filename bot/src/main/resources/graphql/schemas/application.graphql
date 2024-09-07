@@ -1,0 +1,46 @@
+input AnswerInput {
+    number: NonNegativeInt!
+    answer: String! @NotBlank @Size(min: 1, max: 1024)
+}
+
+type Answer {
+    number: NonNegativeInt!
+    answer: String!
+    question: Question!
+}
+
+enum ApplicationStatus {
+    UNPROCESSED,
+    REJECTED,
+    ACCEPTED
+}
+
+type NumberApplicationErrorData {
+    number: NonNegativeInt!
+}
+
+type AnswerTooShortApplicationErrorData {
+    answerLength: NonNegativeInt!
+    minimumLength: PositiveInt!
+    number: NonNegativeInt!
+}
+
+type TooLargeErrorData {
+    size: Int
+}
+
+union ApplicationResponse = Application | Failure
+
+type Application {
+    id: ApplicationId!
+    processTime: DateTime
+    status: ApplicationStatus!
+    user: User!
+    template: Template!
+    answers: [Answer!]!
+}
+
+type ApplicationProcessEvent {
+    id: ApplicationId!
+    status: ApplicationStatus!
+}

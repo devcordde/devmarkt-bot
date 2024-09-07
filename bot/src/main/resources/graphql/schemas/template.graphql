@@ -1,0 +1,15 @@
+union TemplateResponse = Template | Failure
+
+input TemplateInput {
+    name: TemplateName
+    questions: [QuestionInput!]!
+}
+
+type Template {
+    name: TemplateName!
+    questions: [Question!]!
+}
+
+type NumberTemplateErrorData {
+    number: NonNegativeInt!
+}

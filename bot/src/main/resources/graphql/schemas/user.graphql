@@ -1,0 +1,24 @@
+union UserResponse = User | Failure
+
+input UserIdInput {
+    type: String! @NotBlank
+    number: Long
+}
+
+type UserId {
+    type: String!
+    number: Long
+}
+
+type User {
+    id: UserId!
+    role: Role!
+    currentApplication: Application
+    applications: [Application!]!
+}
+
+enum Role {
+    USER,
+    ADMIN,
+    NONE
+}
