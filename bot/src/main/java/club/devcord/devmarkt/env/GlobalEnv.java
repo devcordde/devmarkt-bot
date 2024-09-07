@@ -1,6 +1,5 @@
 package club.devcord.devmarkt.env;
 
-import club.devcord.devmarkt.DevmarktBot;
 import org.slf4j.Logger;
 
 import java.util.function.Function;

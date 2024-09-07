@@ -10,10 +10,8 @@ import java.util.concurrent.CompletableFuture;
 public class HealthCheck {
 
   public static CompletableFuture<Boolean> isUp(HttpClient client, String url) throws URISyntaxException {
-    return client.sendAsync(HttpRequest
-            .newBuilder()
+    return client.sendAsync(HttpRequest.newBuilder(URI.create(url + "/health"))
             .GET()
-            .uri(new URI(url + "/health"))
             .build(),
         HttpResponse.BodyHandlers.ofString()
     ).handleAsync((response, _err) -> response.body().contains("UP"));
